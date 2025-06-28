@@ -20,7 +20,7 @@ interface PastRacesProps {
 
 const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
   const [expandedRace, setExpandedRace] = useState<string | null>(null);
-  const [polling, setPolling] = useState(0); //15000 15 sec
+  const [polling, setPolling] = useState(15000); //15000 15 sec
   const { UserId } = useSelector((state: RootState) => state.login);
   const {
     data: sortedRaces,
