@@ -67,6 +67,11 @@ function App() {
 
     if (isLoggedIn && status && status === "new") {
       setCurrentBet(null);
+      let timeout = setTimeout(() => {
+        //refresh profile and session endpoint
+        save("change", shuffle("change".split("")).join(""));
+        () => clearTimeout(timeout);
+      }, 20000);
     }
 
     if (isLoggedIn && status && status === "finished") {
