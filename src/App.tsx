@@ -40,7 +40,7 @@ function App() {
   const dispatch = useDispatch();
 
   const { price, socket } = useDogeSocket(
-    "wss://stream.binance.com:9443/ws/dogeusdt@aggTrade"
+    "wss://data-stream.binance.vision/ws"
   );
 
   const status = get("status");
