@@ -67,21 +67,21 @@ function App() {
 
     if (isLoggedIn && status && status === "new") {
       setCurrentBet(null);
-      let timeout = setTimeout(() => {
+      setTimeout(() => {
         //refresh profile and session endpoint
         save("change", shuffle("change".split("")).join(""));
-        () => clearTimeout(timeout);
-      }, 20000);
+        // return () => clearTimeout(timeout);
+      }, 10000);
     }
 
     if (isLoggedIn && status && status === "finished") {
-      let timeout = setTimeout(() => {
+      setTimeout(() => {
         //to show the winner
         save("status", "new");
         save("change", shuffle("change".split("")).join(""));
         setCurrentBet(null);
-        () => clearTimeout(timeout);
-      }, 3000);
+        // return () => clearTimeout(timeout);
+      }, 2000);
     }
   }, [get("status"), isLoggedIn]);
 

@@ -11,7 +11,7 @@ interface LiveRaceAnimationProps {
 const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
   race,
   isActive,
-  currentDogePrice
+  currentDogePrice,
 }) => {
   const [positions, setPositions] = useState<{ [key: string]: number }>({});
   const [leader, setLeader] = useState<string>("");
@@ -61,13 +61,12 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
       });
     }, 100);
 
-    let timeout = setTimeout(() => {
+    setTimeout(() => {
       save("status", "finished");
-      return () => clearTimeout(timeout);
-    }, 7000);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [isActive, race.status, race.models, race.currentPrice]);
+  }, [isActive, race.status, race.models, race.currentPrice, get("status")]);
 
   const getRobotDogeEmoji = (modelId: string) => {
     switch (modelId) {
