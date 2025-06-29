@@ -30,9 +30,9 @@ export function useDogeSocket(url: string) {
     };
 
     ws.onerror = (e) => console.error("WS error:", e);
-    ws.onclose = () => console.log("WebSocket closed");
+    // ws.onclose = () => console.log("WebSocket closed");
 
-    return () => ws.close();
+    // return () => ws.close();
   }, [url]);
 
   return {
