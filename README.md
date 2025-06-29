@@ -24,7 +24,7 @@ A decentralized betting application developed by **Bolt AI** on the **Algorand**
 ---
 
 ## Backend Microservice
-This application integrates with a backend lambda microservices for handling various functionalities. The backend microservices repository can be found [here](https://github.com/Josh-Q/bolt_hackathon_serverless). Please refer to the backend repository for further details.
+This application integrates with multiple backend lambda microservices for handling various functionalities. The backend microservices repository can be found [here](https://github.com/Josh-Q/bolt_hackathon_serverless). Please refer to the backend repository for further details.
 
 ---
 
