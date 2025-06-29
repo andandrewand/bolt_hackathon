@@ -40,10 +40,4 @@ We welcome contributions from the community to enhance our application! To contr
 
 ---
 
-## 📄 License
-
-> Add license details here (e.g., MIT, Apache 2.0, etc.)
-
----
-
 *Made with Bolt AI*
