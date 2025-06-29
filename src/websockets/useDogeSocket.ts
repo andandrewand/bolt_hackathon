@@ -8,12 +8,6 @@ export function useDogeSocket(url: string) {
     const ws = new WebSocket(url);
     setSocket(ws);
 
-    // ws.onmessage = (event) => {
-    //   const data = JSON.parse(event.data);
-    //   // aggTrade payload includes price under "p"
-    //   setPrice(parseFloat(data.p).toFixed(6));
-    // };
-
     ws.onopen = () => {
       ws.send(
         JSON.stringify({
