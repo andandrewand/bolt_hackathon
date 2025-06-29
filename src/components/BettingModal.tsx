@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Race } from "../types/racing";
-import { X, DollarSign } from "lucide-react";
+import { X } from "lucide-react";
 import { ModalInfo, ModalWinRate, SessionList } from "../modals";
 import { getHashRoundId } from "../utils";
 
@@ -30,8 +30,6 @@ const BettingModal: React.FC<BettingModalProps> = ({
 
   if (!isOpen) return null;
 
-  // useEffect(() => {}, [scheduledRace]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const payout = parseFloat(
@@ -43,10 +41,6 @@ const BettingModal: React.FC<BettingModalProps> = ({
       setSelectedModel("");
       setBetAmount(5);
     }
-  };
-
-  const calculatePayout = () => {
-    return betAmount * 3; // 3x payout for winner
   };
 
   const getRobotDogeEmoji = (modelId: string) => {

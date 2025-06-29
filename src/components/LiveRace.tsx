@@ -1,6 +1,6 @@
 import React from "react";
 import { Race, Bet } from "../types/racing";
-import { Clock, DollarSign, Zap, Play } from "lucide-react";
+import { Clock, Zap, Play } from "lucide-react";
 import LiveRaceAnimation from "./LiveRaceAnimation";
 import { get, getHashRoundId, pad, save, shuffle } from "../utils";
 import { ModalInfo, ModalWinRate, SessionList } from "../modals";
@@ -13,7 +13,6 @@ interface LiveRaceProps {
   scheduledRace: SessionList[];
   modalWinRate: ModalWinRate[];
   currentDogePrice: number;
-  setCurrentRace: React.Dispatch<React.SetStateAction<Race | null>>;
 }
 
 const LiveRace: React.FC<LiveRaceProps> = ({
@@ -23,7 +22,6 @@ const LiveRace: React.FC<LiveRaceProps> = ({
   scheduledRace,
   modalWinRate,
   currentDogePrice,
-  setCurrentRace,
 }) => {
   const {
     timeLeft: { minutes, seconds },
@@ -32,13 +30,6 @@ const LiveRace: React.FC<LiveRaceProps> = ({
       ? scheduledRace[0].candleTimestamp
       : ""
   );
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
 
   (() => {
     if (minutes === 4 && seconds < 45 && seconds > 43) {

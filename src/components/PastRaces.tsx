@@ -53,18 +53,6 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
     setExpandedRace(expandedRace === raceId ? null : raceId);
   };
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  };
-
-  const getPriceChange = (startPrice: number, endPrice: number) => {
-    const change = ((endPrice - startPrice) / startPrice) * 100;
-    return {
-      percentage: change.toFixed(2),
-      isPositive: change >= 0,
-    };
-  };
-
   const getRobotDogeEmoji = (modelId: string) => {
     switch (modelId) {
       case "satoshi-shibe":

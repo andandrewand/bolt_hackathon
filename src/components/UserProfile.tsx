@@ -34,7 +34,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
 
   useMemo(() => {
     const change = get("change");
-    if (change && UserId) {
+    if (change && change !== "change" && UserId) {
       (async () => {
         await getUserProfile({ userId: UserId });
       })();

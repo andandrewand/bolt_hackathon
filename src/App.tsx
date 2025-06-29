@@ -25,7 +25,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userStats, setUserStats] = useState<UserStats>(mockUserStats);
   const [currentRace, setCurrentRace] = useState<Race | null>(null);
-  const [pastRaces, setPastRaces] = useState<PastRace[]>(mockPastRaces);
+  const [_, setPastRaces] = useState<PastRace[]>(mockPastRaces);
   const [currentBet, setCurrentBet] = useState<Bet | null>(null);
   const [showBettingModal, setShowBettingModal] = useState(false);
   const [raceCounter, setRaceCounter] = useState(3);
@@ -59,45 +59,6 @@ function App() {
       setCurrentBet(JSON.parse(storedBet));
     }
   }, [UserId, sessionId, status, storedBet]);
-  // Initialize first race
-  // useEffect(() => {
-  //   if (isLoggedIn && !currentRace) {
-  //     startNewRace();
-  //   }
-  // }, [isLoggedIn]);
-
-  // Race timer
-  // useEffect(() => {
-  //   if (!currentRace || !isLoggedIn) return;
-
-  //   const interval = setInterval(() => {
-  //     setCurrentRace((prev) => {
-  //       if (!prev) return null;
-
-  //       const newTimeRemaining = Math.max(0, prev.timeRemaining - 1);
-  //       let newStatus = prev.status;
-
-  //       // Status transitions
-  //       if (newTimeRemaining === 30 && prev.status === "betting") {
-  //         newStatus = "locked";
-  //       } else if (newTimeRemaining === 0 && prev.status === "locked") {
-  //         newStatus = "running";
-  //         // Simulate API call delay
-  //         setTimeout(() => {
-  //           finishRace();
-  //         }, 2000);
-  //       }
-
-  //       return {
-  //         ...prev,
-  //         timeRemaining: newTimeRemaining,
-  //         status: newStatus,
-  //       };
-  //     });
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, [currentRace, isLoggedIn]);
 
   useEffect(() => {
     const status = get("status");
@@ -135,77 +96,6 @@ function App() {
 
     setCurrentRace(newRace);
     setRaceCounter((prev) => prev + 1);
-  };
-
-  const finishRace = async () => {
-    if (!currentRace) return;
-
-    // Generate final price
-    const finalPrice = generateMockPrice();
-
-    // Determine winner (closest prediction)
-    let winner = currentRace.models[0];
-    let smallestDiff = Math.abs(finalPrice - (winner.prediction || 0));
-
-    currentRace.models.forEach((model) => {
-      const diff = Math.abs(finalPrice - (model.prediction || 0));
-      if (diff < smallestDiff) {
-        smallestDiff = diff;
-        winner = model;
-      }
-    });
-
-    // Update race
-    // const finishedRace: Race = {
-    //   ...currentRace,
-    //   status: "finished",
-    //   targetPrice: finalPrice,
-    //   winner: winner.id,
-    //   timeRemaining: 0,
-    // };
-
-    // Create past race record
-    const pastRace: PastRace = {
-      id: currentRace.id,
-      name: currentRace.name,
-      startPrice: currentRace.currentPrice,
-      endPrice: finalPrice,
-      winner: winner,
-      models: currentRace.models,
-      timestamp: new Date(),
-      userBet: currentBet || undefined,
-    };
-
-    // Update user stats if they had a bet
-    // if (currentBet) {
-    //   const won = currentBet.modelId === winner.id;
-    //   const payout = won ? currentBet.amount * 3 : 0;
-
-    //   setUserStats((prev) => ({
-    //     ...prev,
-    //     balance: prev.balance + payout - (won ? 0 : currentBet.amount),
-    //     totalBets: prev.totalBets + 1,
-    //     totalWon: prev.totalWon + (won ? 1 : 0),
-    //     winRate: Math.round(
-    //       ((prev.totalWon + (won ? 1 : 0)) / (prev.totalBets + 1)) * 100
-    //     ),
-    //     totalEarnings: prev.totalEarnings + payout - currentBet.amount,
-    //   }));
-
-    //   // Update bet status
-    //   const updatedBet: Bet = {
-    //     ...currentBet,
-    //     status: won ? "won" : "lost",
-    //     payout: won ? payout : undefined,
-    //   };
-
-    //   pastRace.userBet = updatedBet;
-    // }
-
-    // Add to past races (most recent first)
-    // setPastRaces((prev) => [pastRace, ...prev]);
-
-    save("status", "finished");
   };
 
   const handleLogin = async (loginUsername: string, password: string) => {
@@ -272,23 +162,12 @@ function App() {
           prediction: newBet.modelId,
           roundId,
         });
-
-        // if (response.data) {
-        //   save("status", "finished");
-        // }
       }
-
-      //user didnt bet
-      // save("status", "finished");
     } catch (e) {
       console.error("Error placing bid: ", e);
     }
     
     clearItem("bet");
-    // setUserStats((prev) => ({
-    //   ...prev,
-    //   balance: prev.balance - amount,
-    // }));
   };
 
   if (!isLoggedIn) {
@@ -345,7 +224,6 @@ function App() {
               scheduledRace={scheduledRace}
               modalWinRate={modalWinRate}
               currentDogePrice={parseFloat(price ?? "0")}
-              setCurrentRace={setCurrentRace}
             />
           )}
 
