@@ -44,7 +44,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             <div>
               <h1 className="text-4xl font-bold text-gray-900">DogeRace</h1>
               <p className="text-lg text-orange-600 font-medium">
-                AI battle. Doge price. You bet who's right.
+                AI Duel. You Bet. On-Chain.
               </p>
             </div>
           </div>

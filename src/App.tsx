@@ -166,7 +166,7 @@ function App() {
     } catch (e) {
       console.error("Error placing bid: ", e);
     }
-    
+
     clearItem("bet");
   };
 
@@ -189,7 +189,7 @@ function App() {
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">DogeRace</h1>
                 <p className="text-sm text-orange-600">
-                  AI battle. Doge price. You bet who's right.
+                  AI Duel. You Bet. On-Chain.
                 </p>
               </div>
             </div>
