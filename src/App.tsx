@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeSession, saveSession } from "./slices/loginSlice";
 import { RootState } from "./store";
 import { ModalWinRate, SessionList } from "./modals";
-import { clear, clearItem, get, save } from "./utils";
+import { clear, clearItem, get, save, shuffle } from "./utils";
 import { useDogeSocket } from "./websockets/useDogeSocket";
 import { useBidMutation } from "./apis/bid";
 
@@ -73,6 +73,7 @@ function App() {
       let timeout = setTimeout(() => {
         //to show the winner
         save("status", "new");
+        save("change", shuffle("change".split("")).join(""));
         setCurrentBet(null);
         () => clearTimeout(timeout);
       }, 3000);
@@ -163,6 +164,7 @@ function App() {
           roundId,
         });
       }
+      save("change", shuffle("change".split("")).join(""));
     } catch (e) {
       console.error("Error placing bid: ", e);
     }

@@ -99,7 +99,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <div className="flex items-center justify-center mb-2">
             <Target className="w-5 h-5 text-orange-600 mr-1" />
             <span className="text-xl font-bold text-gray-900">
-              {userProfile.user.winRate}%
+              {userProfile.user.winRate.toFixed(4)}%
             </span>
           </div>
           <div className="text-xs text-gray-600 font-medium">Win Rate</div>
@@ -109,7 +109,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           <div className="flex items-center justify-center mb-2">
             <Trophy className="w-5 h-5 text-orange-600 mr-1" />
             <span className="text-xl font-bold text-gray-900">
-              {stats.totalBets}
+              {userProfile.user.totalBets}
             </span>
           </div>
           <div className="text-xs text-gray-600 font-medium">Total Bets</div>

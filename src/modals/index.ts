@@ -26,6 +26,7 @@ export interface UserProfileReponse {
     winRate: number;
     totalEarning: number;
     modelWinRates: ModalWinRate[];
+    totalBets: string;
   };
 }
 
