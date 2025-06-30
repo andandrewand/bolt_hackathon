@@ -49,7 +49,9 @@ const LiveRace: React.FC<LiveRaceProps> = ({
       return;
     }
 
-    
+    if (get("bet")) {
+      save("status", "betting");
+    }
   })();
 
   const getStatusColor = () => {

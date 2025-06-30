@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { MLModel, PastRace } from "../types/racing";
+import React, { useEffect, useState } from "react";
+import { MLModel } from "../types/racing";
 import {
   ChevronDown,
   ChevronUp,
@@ -11,7 +11,7 @@ import { useBidHistoryMutation, useSessionsQuery } from "../apis/bid";
 import { BidHistoryRequest, ModalInfo, SessionList } from "../modals";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import { clearItem, get, getHashRoundId, save } from "../utils";
+import {get, getHashRoundId, save } from "../utils";
 import { mlModels } from "../data/mockData";
 
 interface PastRacesProps {
@@ -37,7 +37,6 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
     ) {
       setScheduledRace(sortedRaces.scheduled);
       save("status", "new");
-      clearItem("bet");
       return;
     }
 

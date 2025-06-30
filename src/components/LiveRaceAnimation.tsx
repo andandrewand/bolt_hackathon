@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Race } from "../types/racing";
-import { get, save } from "../utils";
+import { clearItem, get, save } from "../utils";
 
 interface LiveRaceAnimationProps {
   race: Race;
@@ -63,6 +63,7 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
 
     setTimeout(() => {
       save("status", "finished");
+      clearItem("bet");
     }, 3000);
 
     return () => clearInterval(interval);

@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeSession, saveSession } from "./slices/loginSlice";
 import { RootState } from "./store";
 import { ModalWinRate, SessionList } from "./modals";
-import { clear, clearItem, get, save, shuffle } from "./utils";
+import { clear, get, save, shuffle } from "./utils";
 import { useDogeSocket } from "./websockets/useDogeSocket";
 import { useBidMutation } from "./apis/bid";
 
@@ -53,7 +53,6 @@ function App() {
 
     if (isLoggedIn && !status) {
       save("status", "new");
-      clearItem("bet");
     }
 
     if (storedBet && !currentBet) {
@@ -68,6 +67,10 @@ function App() {
 
     if (isLoggedIn && status && status === "new") {
       setCurrentBet(null);
+    }
+
+    if (isLoggedIn && get("bet")) {
+      save("status", "betting");
     }
 
     if (
