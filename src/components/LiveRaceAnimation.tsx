@@ -61,9 +61,8 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
       });
     }, 100);
 
-    let timeout = setTimeout(() => {
+    setTimeout(() => {
       save("status", "finished");
-      return () => clearTimeout(timeout);
     }, 3000);
 
     return () => clearInterval(interval);

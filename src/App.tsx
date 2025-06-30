@@ -75,9 +75,8 @@ function App() {
       status &&
       (status === "upcoming" || status === "finished")
     ) {
-      let timeout = setTimeout(() => {
+      setTimeout(() => {
         save("change", shuffle("change".split("")).join(""));
-        return () => clearTimeout(timeout);
       }, 10000);
     }
   }, [get("status"), get("change"), isLoggedIn]);
