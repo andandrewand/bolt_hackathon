@@ -40,4 +40,4 @@ We welcome contributions from the community to enhance our application! To contr
 
 ---
 
-*Made with Bolt AI*
+*Made with Bolt AI* 
