@@ -11,7 +11,7 @@ import { useBidHistoryMutation, useSessionsQuery } from "../apis/bid";
 import { BidHistoryRequest, ModalInfo, SessionList } from "../modals";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import { get, getHashRoundId, save } from "../utils";
+import { clearItem, get, getHashRoundId, save } from "../utils";
 import { mlModels } from "../data/mockData";
 
 interface PastRacesProps {
@@ -20,32 +20,43 @@ interface PastRacesProps {
 
 const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
   const [expandedRace, setExpandedRace] = useState<string | null>(null);
-  const [polling, setPolling] = useState(1000); //15000 15 sec
   const { UserId } = useSelector((state: RootState) => state.login);
   const {
     data: sortedRaces,
     isSuccess,
     isError,
     refetch,
-  } = useSessionsQuery({ limit: 10 }, { pollingInterval: polling });
+  } = useSessionsQuery({ limit: 10 }, { pollingInterval: 0 });
 
   const [callBidHistory] = useBidHistoryMutation();
 
   useEffect(() => {
-    if (sortedRaces && sortedRaces.scheduled.length > 0) {
+    if (
+      sortedRaces &&
+      sortedRaces.scheduled.length > 0
+    ) {
       setScheduledRace(sortedRaces.scheduled);
-      setPolling(0);
       save("status", "new");
+      clearItem("bet");
       return;
     }
 
-    save("status", "betting");
-  }, [sortedRaces]);
+    save("status", "upcoming");
+  }, [sortedRaces, isSuccess, isError]);
 
-  useMemo(() => {
+  useEffect(() => {
     const change = get("change");
     if (change && change !== "change" && (isSuccess || isError)) {
-      refetch();
+      (async () => {
+        try {
+          const response = await refetch();
+          if (response.data && response.data.scheduled.length > 0) {
+            save("status", "new");
+            return;
+          }
+          save("status", "upcoming");
+        } catch (e) {}
+      })();
     }
   }, [get("change")]);
 
@@ -94,11 +105,6 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
       actualClose: "0.00",
     } as const;
   };
-
-  // Sort races by timestamp (most recent first)
-  // const sortedRaces = [...races].sort(
-  //   (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
-  // );
 
   const bidHistory = async ({ roundId, userId }: BidHistoryRequest) => {
     try {

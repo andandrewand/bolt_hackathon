@@ -42,8 +42,8 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
             : 0.5;
 
           // Better accuracy = faster speed (inverted)
-          const baseSpeed = 0.8 + (1 - accuracy) * 1.5;
-          const randomVariation = 0.5 + Math.random() * 0.5;
+          const baseSpeed = 1.6 + (1 - accuracy) * 1.5;
+          const randomVariation = 0.8 + Math.random() * 0.4;
           const speed = baseSpeed * randomVariation;
 
           const currentPos = prev[model.id] || 0;
@@ -61,8 +61,9 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
       });
     }, 100);
 
-    setTimeout(() => {
+    let timeout = setTimeout(() => {
       save("status", "finished");
+      return () => clearTimeout(timeout);
     }, 3000);
 
     return () => clearInterval(interval);

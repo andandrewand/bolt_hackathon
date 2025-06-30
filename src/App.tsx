@@ -51,8 +51,9 @@ function App() {
       setIsLoggedIn(true);
     }
 
-    if (!status) {
+    if (isLoggedIn && !status) {
       save("status", "new");
+      clearItem("bet");
     }
 
     if (storedBet && !currentBet) {
@@ -67,23 +68,19 @@ function App() {
 
     if (isLoggedIn && status && status === "new") {
       setCurrentBet(null);
-      setTimeout(() => {
-        //refresh profile and session endpoint
-        save("change", shuffle("change".split("")).join(""));
-        // return () => clearTimeout(timeout);
-      }, 10000);
     }
 
-    if (isLoggedIn && status && status === "finished") {
-      setTimeout(() => {
-        //to show the winner
-        save("status", "new");
+    if (
+      isLoggedIn &&
+      status &&
+      (status === "upcoming" || status === "finished")
+    ) {
+      let timeout = setTimeout(() => {
         save("change", shuffle("change".split("")).join(""));
-        setCurrentBet(null);
-        // return () => clearTimeout(timeout);
-      }, 2000);
+        return () => clearTimeout(timeout);
+      }, 10000);
     }
-  }, [get("status"), isLoggedIn]);
+  }, [get("status"), get("change"), isLoggedIn]);
 
   const populateRaceDetails = () => {
     const currentPrice = generateMockPrice();
@@ -173,8 +170,6 @@ function App() {
     } catch (e) {
       console.error("Error placing bid: ", e);
     }
-
-    clearItem("bet");
   };
 
   if (!isLoggedIn) {

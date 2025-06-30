@@ -37,14 +37,9 @@ export const bidApi = createApi({
                   ),
                 };
               }),
-            scheduled: response.sessions
-              .filter((session: SessionList) => session.statusLabel !== "past")
-              // .map((session: SessionList) => {
-              //   return {
-              //     ...session,
-              //     candleTimestamp: "2025-06-29T00:29:00Z", //TODO: to remove this map function
-              //   };
-              // }),
+            scheduled: response.sessions.filter(
+              (session: SessionList) => session.statusLabel !== "past"
+            ),
           };
         },
       }),

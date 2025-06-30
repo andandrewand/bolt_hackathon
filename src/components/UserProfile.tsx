@@ -32,7 +32,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
     },
   });
 
-  useMemo(() => {
+  useEffect(() => {
     const change = get("change");
     if (change && change !== "change" && UserId) {
       (async () => {

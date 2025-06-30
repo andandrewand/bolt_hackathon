@@ -14,7 +14,7 @@ export interface Race {
   name: string;
   startTime: Date;
   endTime: Date;
-  status: 'new' | 'betting' | 'locked' | 'running' | 'finished';
+  status: 'new' | 'betting' | 'locked' | 'running' | 'finished' | "upcoming";
   currentPrice: number;
   targetPrice?: number;
   models: MLModel[];

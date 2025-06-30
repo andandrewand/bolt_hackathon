@@ -15,9 +15,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    setTimeout(() => {
+    let timeout = setTimeout(() => {
       onLogin(username, password);
       setIsLoading(false);
+      return () => clearTimeout(timeout);
     }, 1000);
   };
 
