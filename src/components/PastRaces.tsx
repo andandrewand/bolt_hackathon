@@ -8,11 +8,17 @@ import {
   TrendingDown,
 } from "lucide-react";
 import { useBidHistoryMutation, useSessionsQuery } from "../apis/bid";
-import { BidHistoryRequest, ModalInfo, SessionList } from "../modals";
+import {
+  BidHistoryRequest,
+  BidHistoryResponse,
+  ModalInfo,
+  SessionList,
+} from "../modals";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import {get, getHashRoundId, save } from "../utils";
+import { get, getHashRoundId, save } from "../utils";
 import { mlModels } from "../data/mockData";
+import { BidHistory } from "./BidHistory";
 
 interface PastRacesProps {
   setScheduledRace: React.Dispatch<React.SetStateAction<SessionList[]>>;
@@ -28,13 +34,12 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
     refetch,
   } = useSessionsQuery({ limit: 10 }, { pollingInterval: 0 });
 
+  const [userBidHistory, setBidHistory] = useState<BidHistoryResponse | null>();
+
   const [callBidHistory] = useBidHistoryMutation();
 
   useEffect(() => {
-    if (
-      sortedRaces &&
-      sortedRaces.scheduled.length > 0
-    ) {
+    if (sortedRaces && sortedRaces.scheduled.length > 0) {
       setScheduledRace(sortedRaces.scheduled);
       save("status", "new");
       return;
@@ -108,9 +113,17 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
   const bidHistory = async ({ roundId, userId }: BidHistoryRequest) => {
     try {
       const response = await callBidHistory({ roundId, userId });
-      console.log("bid history resp ", response); //TODO: add users bid winnings
+      if (response.data) {
+        const { userBid } = response.data;
+        setBidHistory({ userBid });
+      }
+
+      if (response.error) {
+        setBidHistory(null);
+      }
     } catch (e) {
       console.error("Error in bid history: ", e);
+      setBidHistory(null);
     }
   };
 
@@ -295,9 +308,10 @@ const PastRaces: React.FC<PastRacesProps> = ({ setScheduledRace }) => {
 
                     {/* All Predictions */}
                     <div className="bg-white rounded-lg p-4 border border-orange-200">
-                      <h4 className="font-medium text-gray-900 mb-3">
-                        AI Predictions
-                      </h4>
+                      {/** bid history */}
+                      {userBidHistory && (
+                        <BidHistory userBid={userBidHistory.userBid} />
+                      )}
                       <div className="space-y-2">
                         {race.models.map((model: ModalInfo, idx: number) => {
                           const isWinner = model.sessionStatus === "WIN";

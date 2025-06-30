@@ -4,6 +4,7 @@ import { axiosBaseQueryRetry } from "../axios";
 import { METHOD_TYPE } from "../utils";
 import {
   BidHistoryRequest,
+  BidHistoryResponse,
   BidRequest,
   SessionList,
   SessionsResponse,
@@ -43,7 +44,7 @@ export const bidApi = createApi({
           };
         },
       }),
-      bidHistory: build.mutation<any, BidHistoryRequest>({
+      bidHistory: build.mutation<BidHistoryResponse, BidHistoryRequest>({
         query: ({ userId, roundId }) => ({
           url: "/bid-history",
           method: METHOD_TYPE.POST,

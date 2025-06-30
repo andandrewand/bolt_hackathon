@@ -78,8 +78,12 @@ export interface Bids {
 }
 
 export interface BidHistoryResponse {
-  userBids: Bids[];
-  lastEvaluatedKey: null;
+  userBid: {
+    roundId: string;
+    bidAmount: number;
+    payoutAmount: number;
+    prediction: string;
+  };
 }
 
 export interface BidRequest {
