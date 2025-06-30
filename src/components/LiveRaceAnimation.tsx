@@ -64,7 +64,7 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
     setTimeout(() => {
       save("status", "finished");
       clearItem("bet");
-    }, 3000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [isActive, race.status, race.models, race.currentPrice, get("status")]);
