@@ -64,10 +64,10 @@ const LiveRaceAnimation: React.FC<LiveRaceAnimationProps> = ({
     setTimeout(() => {
       save("status", "finished");
       clearItem("bet");
-    }, 7000);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [isActive, race.status, race.models, race.currentPrice, get("status")]);
+  }, [isActive, race.models, race.currentPrice, get("status")]);
 
   const getRobotDogeEmoji = (modelId: string) => {
     switch (modelId) {
